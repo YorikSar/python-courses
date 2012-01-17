@@ -6,6 +6,7 @@
 <meta name="generator" content="Docutils 0.8.1: http://docutils.sourceforge.net/" />
 <meta name="version" content="S5 1.1" />
 <title>Python basic course</title>
+<meta name="author" content="Yuriy Taraday" />
 <style type="text/css">
 
 /*
@@ -346,7 +347,16 @@ ul.auto-toc {
 <div class="presentation">
 <div class="slide" id="slide0">
 <h1 class="title">Python basic course</h1>
-
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr><th class="docinfo-name">Author:</th>
+<td>Yuriy Taraday</td></tr>
+<tr><th class="docinfo-name">Contact:</th>
+<td><a class="first reference external" href="mailto:yorik.sar&#64;gmail.com">yorik.sar&#64;gmail.com</a>; <a class="last reference external" href="mailto:ytaraday&#64;mirantis.com">ytaraday&#64;mirantis.com</a></td></tr>
+</tbody>
+</table>
 <!-- Definitions of interpreted text roles (classes) for S5/HTML data. -->
 <!-- This data file has been placed in the public domain. -->
 <!-- Colours
@@ -390,7 +400,7 @@ ul.auto-toc {
 </div>
 <div class="slide" id="id1">
 <h1></h1>
-<p class="center"><span class="huge">Python basics</span></p>
+<p class="center huge">Python basics</p>
 </div>
 <div class="slide" id="history-of-glorious-python">
 <h1>History of glorious Python</h1>
@@ -516,8 +526,8 @@ words(istream &amp;document) {
 </ul>
 <p class="small incremental">Operations:</p>
 <ul class="small incremental simple">
-<li>indexing: if <tt class="docutils literal"><span class="pre">a==[0,1,2,3,4]</span></tt>; then <tt class="docutils literal"><span class="pre">a[2]==2</span></tt>; <tt class="docutils literal"><span class="pre">a[2:4]==[2,3]</span></tt>; <tt class="docutils literal"><span class="pre">a[1:4:2]==[1,3]</span></tt></li>
-<li>negative indexing: <tt class="docutils literal"><span class="pre">a[-2]==3</span></tt>; <tt class="docutils literal"><span class="pre">a[1:-1]=[1,2,3,4]</span></tt>; <tt class="docutils literal"><span class="pre">a[-1:-4:-2]==[4,2]</span></tt></li>
+<li>indexing: if <tt class="docutils literal"><span class="pre">a==[0,1,2,3,4]</span></tt>: then <tt class="docutils literal"><span class="pre">a[2]==2</span></tt>; <tt class="docutils literal"><span class="pre">a[2:4]==[2,3]</span></tt>; <tt class="docutils literal"><span class="pre">a[1:4:2]==[1,3]</span></tt></li>
+<li>negative indexing: <tt class="docutils literal"><span class="pre">a[-2]==3</span></tt>; <tt class="docutils literal"><span class="pre">a[1:-1]=[1,2,3]</span></tt>; <tt class="docutils literal"><span class="pre">a[-1:-4:-2]==[4,2]</span></tt></li>
 <li>inclusion: <tt class="docutils literal">2 in a == True</tt>; <tt class="docutils literal">12 in a == False</tt>; <tt class="docutils literal">5 not in a == True</tt></li>
 <li>arithmetic: <tt class="docutils literal"><span class="pre">[2,4]+[3,5]==[2,4,3,5]</span></tt>; <tt class="docutils literal"><span class="pre">[1,2]*3==[1,2,1,2,1,2]</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">len(a)==5</span></tt>; <tt class="docutils literal"><span class="pre">min(a)==0</span></tt>; <tt class="docutils literal"><span class="pre">max(a)==4</span></tt>; <tt class="docutils literal"><span class="pre">a.index(3)==3</span></tt>; <tt class="docutils literal"><span class="pre">a.count(4)==1</span></tt></li>
@@ -640,9 +650,11 @@ Frozensets are immutable sets: <tt class="docutils literal">frozenset()</tt>; <t
 <li>sets relations: <tt class="docutils literal">s1 &lt;= s2</tt>; <tt class="docutils literal">s1 &lt; s2</tt>; <tt class="docutils literal">s1 &gt;= s2</tt>; <tt class="docutils literal">s1 &gt; s2</tt></li>
 <li>arithmetic: <tt class="docutils literal">{1,2} | {2,3} == {1,2,3}</tt>; <tt class="docutils literal">{1,2} &amp; {2,3} == {2}</tt>; <tt class="docutils literal"><span class="pre">{1,2}-{2,3}=={1}</span></tt>; <tt class="docutils literal"><span class="pre">{1,2}^{2,3}=={1,3}</span></tt></li>
 </ul>
-<p class="small borderless">Set, but not frozensets support:
-* operators <tt class="docutils literal">|=</tt>; <tt class="docutils literal">&amp;=</tt>; <tt class="docutils literal"><span class="pre">-=</span></tt>; <tt class="docutils literal">^=</tt>
-* methods <tt class="docutils literal">add</tt>; <tt class="docutils literal">remove</tt>; <tt class="docutils literal">discard</tt>; <tt class="docutils literal">pop</tt>; <tt class="docutils literal">clear</tt></p>
+<p class="small borderless">Set, but not frozensets support:</p>
+<ul class="small borderless simple">
+<li>operators <tt class="docutils literal">|=</tt>; <tt class="docutils literal">&amp;=</tt>; <tt class="docutils literal"><span class="pre">-=</span></tt>; <tt class="docutils literal">^=</tt></li>
+<li>methods <tt class="docutils literal">add</tt>; <tt class="docutils literal">remove</tt>; <tt class="docutils literal">discard</tt>; <tt class="docutils literal">pop</tt>; <tt class="docutils literal">clear</tt></li>
+</ul>
 </div>
 <div class="slide" id="dictionaries">
 <h1>Dictionaries</h1>
