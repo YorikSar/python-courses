@@ -4,6 +4,8 @@
  Python basic course
 =====================
 
+:Author: Yuriy Taraday
+:Contact: yorik.sar@gmail.com; ytaraday@mirantis.com
 
 .. contents::
     :class: handout
@@ -18,9 +20,9 @@ Overall course agenda:
 \ 
 ===============
 
-.. class:: center
+.. class:: center huge
 
-   :huge:`Python basics`
+   Python basics
 
 History of glorious Python
 ==========================
@@ -108,8 +110,8 @@ Sequence types
 
     Operations:
 
-    * indexing: if ``a==[0,1,2,3,4]``; then ``a[2]==2``; ``a[2:4]==[2,3]``; ``a[1:4:2]==[1,3]``
-    * negative indexing: ``a[-2]==3``; ``a[1:-1]=[1,2,3,4]``; ``a[-1:-4:-2]==[4,2]``
+    * indexing: if ``a==[0,1,2,3,4]``: then ``a[2]==2``; ``a[2:4]==[2,3]``; ``a[1:4:2]==[1,3]``
+    * negative indexing: ``a[-2]==3``; ``a[1:-1]=[1,2,3]``; ``a[-1:-4:-2]==[4,2]``
     * inclusion: ``2 in a == True``; ``12 in a == False``; ``5 not in a == True``
     * arithmetic: ``[2,4]+[3,5]==[2,4,3,5]``; ``[1,2]*3==[1,2,1,2,1,2]``
     * ``len(a)==5``; ``min(a)==0``; ``max(a)==4``; ``a.index(3)==3``; ``a.count(4)==1``
@@ -162,6 +164,7 @@ Sets and frozensets
     * arithmetic: ``{1,2} | {2,3} == {1,2,3}``; ``{1,2} & {2,3} == {2}``; ``{1,2}-{2,3}=={1}``; ``{1,2}^{2,3}=={1,3}``
 
     Set, but not frozensets support:
+
     * operators ``|=``; ``&=``; ``-=``; ``^=``
     * methods ``add``; ``remove``; ``discard``; ``pop``; ``clear``
 
