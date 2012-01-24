@@ -376,28 +376,43 @@ ul.auto-toc {
 <div class="contents handout topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#id1" id="id3"></a></li>
-<li><a class="reference internal" href="#history-of-glorious-python" id="id4">History of glorious Python</a></li>
-<li><a class="reference internal" href="#python-vs-abc-vs-c" id="id5">Python vs. ABC vs. C++</a></li>
-<li><a class="reference internal" href="#arithmetic-python" id="id6">Arithmetic Python</a></li>
-<li><a class="reference internal" href="#sequence-types" id="id7">Sequence types</a></li>
-<li><a class="reference internal" href="#mutable-sequence-operations" id="id8">Mutable sequence operations</a></li>
-<li><a class="reference internal" href="#sets-and-frozensets" id="id9">Sets and frozensets</a></li>
-<li><a class="reference internal" href="#dictionaries" id="id10">Dictionaries</a></li>
-<li><a class="reference internal" href="#logical-operations" id="id11">Logical operations</a></li>
-<li><a class="reference internal" href="#string-formatting" id="id12">String formatting</a></li>
-<li><a class="reference internal" href="#if-operator" id="id13">If operator</a></li>
-<li><a class="reference internal" href="#loops" id="id14">Loops</a></li>
-<li><a class="reference internal" href="#functions" id="id15">Functions</a></li>
-<li><a class="reference internal" href="#modules" id="id16">Modules</a></li>
-<li><a class="reference internal" href="#evals-in-python" id="id17">Evals in Python</a></li>
-<li><a class="reference internal" href="#evals-in-python-2" id="id18">Evals in Python 2</a></li>
-<li><a class="reference internal" href="#packages" id="id19">Packages</a></li>
-<li><a class="reference internal" href="#id2" id="id20"></a></li>
-<li><a class="reference internal" href="#module-sys" id="id21">Module: sys</a></li>
-<li><a class="reference internal" href="#module-os" id="id22">Module: os</a></li>
-<li><a class="reference internal" href="#module-os-walk" id="id23">Module: os.walk()</a></li>
-<li><a class="reference internal" href="#module-zipfile" id="id24">Module: zipfile</a></li>
+<li><a class="reference internal" href="#id1" id="id5"></a></li>
+<li><a class="reference internal" href="#history-of-glorious-python" id="id6">History of glorious Python</a></li>
+<li><a class="reference internal" href="#python-vs-abc-vs-c" id="id7">Python vs. ABC vs. C++</a></li>
+<li><a class="reference internal" href="#arithmetic-python" id="id8">Arithmetic Python</a></li>
+<li><a class="reference internal" href="#sequence-types" id="id9">Sequence types</a></li>
+<li><a class="reference internal" href="#mutable-sequence-operations" id="id10">Mutable sequence operations</a></li>
+<li><a class="reference internal" href="#sets-and-frozensets" id="id11">Sets and frozensets</a></li>
+<li><a class="reference internal" href="#dictionaries" id="id12">Dictionaries</a></li>
+<li><a class="reference internal" href="#logical-operations" id="id13">Logical operations</a></li>
+<li><a class="reference internal" href="#string-formatting" id="id14">String formatting</a></li>
+<li><a class="reference internal" href="#if-operator" id="id15">If operator</a></li>
+<li><a class="reference internal" href="#loops" id="id16">Loops</a></li>
+<li><a class="reference internal" href="#functions" id="id17">Functions</a></li>
+<li><a class="reference internal" href="#modules" id="id18">Modules</a></li>
+<li><a class="reference internal" href="#evals-in-python" id="id19">Evals in Python</a></li>
+<li><a class="reference internal" href="#evals-in-python-2" id="id20">Evals in Python 2</a></li>
+<li><a class="reference internal" href="#packages" id="id21">Packages</a></li>
+<li><a class="reference internal" href="#id2" id="id22"></a></li>
+<li><a class="reference internal" href="#module-sys" id="id23">Module: sys</a></li>
+<li><a class="reference internal" href="#module-os" id="id24">Module: os</a></li>
+<li><a class="reference internal" href="#module-os-walk" id="id25">Module: os.walk()</a></li>
+<li><a class="reference internal" href="#module-zipfile" id="id26">Module: zipfile</a></li>
+<li><a class="reference internal" href="#id3" id="id27"></a></li>
+<li><a class="reference internal" href="#basic-types-hierarchy" id="id28">Basic types hierarchy</a></li>
+<li><a class="reference internal" href="#old-style-classes" id="id29">Old-style classes</a></li>
+<li><a class="reference internal" href="#new-style-classes" id="id30">New-style classes</a></li>
+<li><a class="reference internal" href="#special-methods" id="id31">Special methods</a></li>
+<li><a class="reference internal" href="#protocols" id="id32">Protocols</a></li>
+<li><a class="reference internal" href="#decorators" id="id33">Decorators</a></li>
+<li><a class="reference internal" href="#class-and-static-methods" id="id34">Class and static methods</a></li>
+<li><a class="reference internal" href="#properties" id="id35">Properties</a></li>
+<li><a class="reference internal" href="#attribute-lookup" id="id36">Attribute lookup</a></li>
+<li><a class="reference internal" href="#exceptions" id="id37">Exceptions</a></li>
+<li><a class="reference internal" href="#exception-handling" id="id38">Exception handling</a></li>
+<li><a class="reference internal" href="#exception-hierarchy" id="id39">Exception hierarchy</a></li>
+<li><a class="reference internal" href="#id4" id="id40"></a></li>
+<li><a class="reference internal" href="#slots" id="id41">Slots</a></li>
 </ul>
 </div>
 <p>Overall course agenda:</p>
@@ -1188,7 +1203,7 @@ some of them.</blockquote>
 <td>paths list separator (<tt class="docutils literal">:</tt> or <tt class="docutils literal">;</tt>)</td>
 </tr>
 <tr><td><tt class="docutils literal">linesep</tt></td>
-<td>line separator (<tt class="docutils literal">\n</tt> or <tt class="docutils literal">\n</tt> or <tt class="docutils literal">\r\n</tt>)</td>
+<td>line separator (<tt class="docutils literal">\r</tt> or <tt class="docutils literal">\n</tt> or <tt class="docutils literal">\r\n</tt>)</td>
 </tr>
 </tbody>
 </table>
@@ -1252,6 +1267,582 @@ f.write('theirfile.txt', 'othername.txt')
 print f.open('somefile.txt').read()
 f.close()
 </pre>
+</div>
+<div class="slide" id="id3">
+<h1></h1>
+<blockquote>
+<span class="huge">Object Oriented Programming in Python</span></blockquote>
+</div>
+<div class="slide" id="basic-types-hierarchy">
+<h1>Basic types hierarchy</h1>
+<ul class="small simple">
+<li><tt class="docutils literal">object</tt></li>
+</ul>
+<blockquote class="small">
+<ul class="simple">
+<li><tt class="docutils literal">NoneType</tt> - singletone <tt class="docutils literal">None</tt></li>
+<li><tt class="docutils literal">NotImplementedType</tt> - singletone <tt class="docutils literal">NotImplemented</tt></li>
+<li><tt class="docutils literal">numbers.Number</tt></li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal">numbers.Integral</tt> - <tt class="docutils literal">int</tt>, <tt class="docutils literal">long</tt>, <tt class="docutils literal">bool</tt></li>
+<li><tt class="docutils literal">numbers.Real</tt> - <tt class="docutils literal">float</tt></li>
+<li><tt class="docutils literal">numbers.Complex</tt> - <tt class="docutils literal">complex</tt></li>
+</ul>
+</blockquote>
+<ul class="simple">
+<li><tt class="docutils literal">basestring</tt></li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal">str</tt> (<tt class="docutils literal">types.StringType</tt>)</li>
+<li><tt class="docutils literal">unicode</tt> (<tt class="docutils literal">types.UnicodeType</tt>)</li>
+</ul>
+</blockquote>
+</blockquote>
+</div>
+<div class="slide" id="old-style-classes">
+<h1>Old-style classes</h1>
+<p class="center incremental big"><span class="incremental">Forget about them</span></p>
+</div>
+<div class="slide" id="new-style-classes">
+<h1>New-style classes</h1>
+<table border="1" class="borderless tiny docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="incremental first container">
+<p>Classes are declared like this:</p>
+<pre class="literal-block">
+class C(object):
+  cls_var = 123
+  def __init__(self, param):
+    self.obj_var = param
+    self.cls_var += 1
+  def f(self):
+    print self.cls_var, self.obj_var
+</pre>
+</div>
+<div class="incremental container">
+<p>Objects are created by calling a class:</p>
+<pre class="literal-block">
+c = C(123)
+# ~
+c = C.__new__(123)
+c.__init__(123)
+</pre>
+</div>
+<div class="incremental last container">
+<p>Inheritance can be done as usual:</p>
+<pre class="literal-block">
+class A(object):
+  a = 1
+class B(A):
+  b = 2
+class C(B):
+  b = 3
+</pre>
+</div>
+</td>
+<td><div class="incremental first container">
+<p>Note that Python is very dynamic:</p>
+<pre class="literal-block">
+class WeGetSignal(all_your_base()):
+  &quot;&quot;&quot;How are you gentlemen&quot;&quot;&quot;
+  if are_belong_to_us():
+    def make_your_time(self):
+      move_zig()
+  else:
+    def make_your_time(self):
+      for_greate_justice()
+</pre>
+</div>
+<div class="incremental container">
+<p>In fact, class declaration equals to something like this:</p>
+<pre class="literal-block">
+bases = (object,)
+body = &quot;cls_var=123\ndef __init__(self, param):......&quot;
+_attrs = {}
+eval(compile(body,__name__,'exec'),globals(),_attrs)
+C = type(&quot;C&quot;, bases, _attrs)
+</pre>
+</div>
+<div class="incremental last container">
+<p>You can not hide a name inside class, but you can:</p>
+<pre class="literal-block">
+class C(object):
+  _hint_to_hide = 0
+      # polite programmers will not touch it
+  def __obscure_hide():
+      # will be converted to _C__obscure_hide
+    pass
+</pre>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="special-methods">
+<h1>Special methods</h1>
+<p class="small incremental">All that <tt class="docutils literal">__methods__</tt> are special methods, they are used instead of
+operator overloading and lots of other class tuning. Examples:</p>
+<ul class="small incremental simple">
+<li><tt class="docutils literal">__new__</tt> - create object or fine-tune object creation, mostly used in
+metaclasses;</li>
+<li><tt class="docutils literal">__init__</tt> - constructor, object's variables declaration;</li>
+<li><tt class="docutils literal">__del__</tt> is called when object is destroyed, but not necessary;</li>
+<li><tt class="docutils literal">__str__</tt>, <tt class="docutils literal">__repr__</tt> are used to convert object to string like
+<tt class="docutils literal">str(obj)</tt> or <tt class="docutils literal">repr(obj)</tt>, remember <tt class="docutils literal">%s</tt> and <tt class="docutils literal">%r</tt> formatting</li>
+<li><tt class="docutils literal">__lt__</tt>, <tt class="docutils literal">__le__</tt>, <tt class="docutils literal">__gt__</tt>, <tt class="docutils literal">__ge__</tt>, <tt class="docutils literal">__eq__</tt>, <tt class="docutils literal">__ne__</tt> are
+used by all that comparsion operators, so that for example <tt class="docutils literal">a&lt;b</tt> is
+equivalent to <tt class="docutils literal">a.__lt__(b)</tt> or <tt class="docutils literal">b.__gt__(a)</tt> if the first one is not
+implemented or returns <tt class="docutils literal">NotImplemented</tt></li>
+<li><tt class="docutils literal">__cmp__</tt> does all what the previous ones does, returning negative,
+positive values or zero if object is less, greater or equals the parameter
+respectively.</li>
+</ul>
+</div>
+<div class="slide" id="protocols">
+<h1>Protocols</h1>
+<p class="small">There is number of so called protocols in Python. Protocol is some rules about
+class or object that must be met to make built-in functions work.</p>
+<table border="1" class="borderless small docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="incremental first last container">
+<p>For example, <tt class="docutils literal">for</tt> loop:</p>
+<pre class="literal-block">
+for v in obj:
+  do_it(v)
+</pre>
+<p>equals to</p>
+<pre class="literal-block">
+_it = obj.__iter__()
+while True:
+  try:
+    v = _it.next()
+  except StopIteration:
+    break
+  do_it(v)
+</pre>
+</div>
+</td>
+<td><p class="incremental first">So, iterator protocol requires:</p>
+<ul class="incremental last simple">
+<li>container to have <tt class="docutils literal">__iter__</tt> method (which can be called throgh
+<tt class="docutils literal">iter(obj)</tt> built-in) that returns iterator;</li>
+<li>iterator to have <tt class="docutils literal">next</tt> method which returns next element or raises
+<tt class="docutils literal">StopIteration</tt> exception when passed through the end of container;</li>
+<li>iterator to have <tt class="docutils literal">__iter__</tt> method that returns iterator itself,
+just for completeness.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="decorators">
+<h1>Decorators</h1>
+<table border="1" class="tiny borderless docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="incremental first container">
+<pre class="literal-block">
+&#64;decorate
+def f(): pass
+</pre>
+<p>equals to:</p>
+<pre class="literal-block">
+def f(): pass
+f = decorate(f)
+</pre>
+</div>
+<div class="incremental container">
+<p>you can do some function call:</p>
+<pre class="literal-block">
+&#64;decorate('like this')
+def f(): pass
+</pre>
+</div>
+<div class="incremental last container">
+<p>and you can decorate classes:</p>
+<pre class="literal-block">
+&#64;shiny
+class C(object): pass
+</pre>
+</div>
+</td>
+<td><div class="incremental first container">
+<p>decorators usually look like this:</p>
+<pre class="literal-block">
+def decorate1(f):
+  def _wrapped(*args,**kwargs):
+    print &quot;%s(*%s,**%s)&quot; % \
+        (f.__name__,args,kwargs)
+    return f(*args,**kwargs)
+  return _wrapped
+</pre>
+<!-- ** -->
+</div>
+<div class="incremental last container">
+<p>or like this:</p>
+<pre class="literal-block">
+def decorate2(kind):
+  def __inner(f):
+    def _wrapped(*args,**kwargs):
+      print &quot;%s %s(*%s,**%s)&quot; % \
+          (kind,f.__name__,args,kwargs)
+      return f(*args,**kwargs)
+    return _wrapped
+  return __inner
+</pre>
+<!-- ** -->
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="tiny borderless docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="incremental first last container">
+<p>so that:</p>
+<table border="1" class="borderless docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><pre class="first last literal-block">
+&#64;decorate1
+def f1(a): return a+1
+
+&#64;decorate2('Cute')
+def f2(a): return a-1
+</pre>
+</td>
+<td><pre class="first last literal-block">
+&#64;decorate2('Shiny')
+def f3(a): return a*2
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</td>
+<td><div class="incremental first last container">
+<table border="1" class="borderless docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><p class="first">will cause:</p>
+<pre class="last literal-block">
+print f1(1)
+print f2(a=2)
+print f3(3,a=3)
+</pre>
+</td>
+<td><p class="first">to print:</p>
+<pre class="last literal-block">
+f1((1,),{})
+2
+Cute f2((),{'a':2})
+1
+Shiny f3((3,),{'a':3})
+### ERROR!!!! ###
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="class-and-static-methods">
+<h1>Class and static methods</h1>
+<p class="tiny">Of course you want to have methods bound not to object, but to class, or even
+unbound method encapsulated into class namespace.</p>
+<table border="1" class="borderless tiny docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="incremental first container">
+<p>Class methods are bound to current class:</p>
+<pre class="literal-block">
+class A(object):
+  &#64;classmethod
+  def f(cls):
+    return &quot;%s.f&quot; % (cls.__name__,)
+
+class B(A): pass
+
+A.f(), B.f() # =&gt; &quot;A.f&quot;, &quot;B.f&quot;
+</pre>
+</div>
+<div class="incremental container">
+<p>Static methods are totally unbound:</p>
+<pre class="literal-block">
+class C(object):
+  &#64;staticmethod
+  def f(): # No cls, no self
+    pass
+</pre>
+</div>
+<p class="incremental last">Bound methods are methods which already have first argument substituted.</p>
+</td>
+<td><div class="incremental first container">
+<p>Let's say, you have:</p>
+<pre class="literal-block">
+class A(object):
+  def m(self): pass
+  &#64;classmethod
+  def cls_m(cls): pass
+  &#64;staticmethod
+  def st_m(): pass
+
+class B(A): pass
+
+a = A(); b = B()
+</pre>
+</div>
+<div class="incremental container">
+<p>Then methods will be bound like this:</p>
+<table border="1" class="center docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">f</th>
+<th class="head"><tt class="docutils literal">A.f</tt></th>
+<th class="head"><tt class="docutils literal">B.f</tt></th>
+<th class="head"><tt class="docutils literal">a.f</tt></th>
+<th class="head"><tt class="docutils literal">b.f</tt></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal">m</tt></td>
+<td>no</td>
+<td>no</td>
+<td><tt class="docutils literal">a</tt></td>
+<td><tt class="docutils literal">b</tt></td>
+</tr>
+<tr><td><tt class="docutils literal">cls_m</tt></td>
+<td><tt class="docutils literal">A</tt></td>
+<td><tt class="docutils literal">B</tt></td>
+<td><tt class="docutils literal">A</tt></td>
+<td><tt class="docutils literal">B</tt></td>
+</tr>
+<tr><td><tt class="docutils literal">st_m</tt></td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="incremental container">
+<p>To access overloaded method, you should use built-in method <tt class="docutils literal">super</tt>:</p>
+<pre class="literal-block">
+super(C,obj).meth # =&gt; meth bound to a parent of C
+</pre>
+</div>
+<p class="incremental last">Yes, I'm lying again.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="properties">
+<h1>Properties</h1>
+<table border="1" class="borderless small docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="incremental first container">
+<p>Sometimes you want some syntax sugar to make your life easier and access
+computed values as object's fields, not as method result:</p>
+<pre class="literal-block">
+class C(object):
+  def getx(self):
+    return self._x
+  def setx(self,value):
+    self._x = value
+  def delx(self):
+    del self._x
+  x = property(getx, setx, delx)
+</pre>
+</div>
+<div class="incremental last container">
+<p>So that:</p>
+<pre class="literal-block">
+c.x       # ~ c.getx()
+c.x = 123 # ~ c.setx(123)
+del c.x   # ~ c.delx()
+</pre>
+</div>
+</td>
+<td><div class="incremental first last container">
+<p>Note that all arguments except the first one are optional, so <tt class="docutils literal">property</tt> can
+be used as decorator:</p>
+<pre class="literal-block">
+class C(object):
+  &#64;property
+  def x(self):
+    return self._x
+  &#64;x.setter
+  def x(self,value):
+    self._x = value
+  &#64;x.deleter
+  def x(self):
+    del self._x
+</pre>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="attribute-lookup">
+<h1>Attribute lookup</h1>
+<div class="small incremental container">
+<p>You may wonder how <tt class="docutils literal">.</tt> &quot;operator&quot; works. Here are few easy steps:</p>
+<ol class="arabic simple">
+<li>look in obj.__dict__</li>
+<li>look in type(obj) and its parents</li>
+<li>call <tt class="docutils literal">__getattr__</tt>, <tt class="docutils literal">__setattr__</tt> or <tt class="docutils literal">__delattr__</tt></li>
+</ol>
+</div>
+<div class="small incremental container">
+<p>So default behaviour can be mimiced like this:</p>
+<pre class="literal-block">
+class C(object):
+  def __getattr__(self,name):
+    try:
+      return self.__dict__[name]
+    except KeyError:
+      raise AttributeError
+  def __setattr__(self,name,value):
+    self.__dict__[name] = value
+  def __delattr__(self,name):
+    del self.__dict__[name]
+</pre>
+</div>
+</div>
+<div class="slide" id="exceptions">
+<h1>Exceptions</h1>
+<p class="small incremental">Python supports very common exception handling process: if comewhere some
+error occurs, exception is raised at that level, then stack is unwinded to
+find first sutable exception handler, which is then executed.</p>
+<p class="small incremental">Raised exception consists of type, value and traceback. They can be retrieved
+with <tt class="docutils literal">sys.exc_info()</tt> call.</p>
+<div class="small incremental container">
+<p>Whole syntax of <tt class="docutils literal">raise</tt> statement is:</p>
+<pre class="literal-block">
+raise [&lt;type&gt;[,&lt;value&gt;[,&lt;traceback&gt;]]]]
+</pre>
+</div>
+<p class="small incremental">When called without arguments, it reraises last raised exception (or raises
+<tt class="docutils literal">TypeError</tt> if there isn't one).</p>
+<p class="small incremental">When called with one argument, it can be either exception type (which is
+instantiated and raised)or exception object (which is just raised).</p>
+<p class="small incremental">Traceback is set to current location in stack or to the third argument, if it
+is present.</p>
+</div>
+<div class="slide" id="exception-handling">
+<h1>Exception handling</h1>
+<div class="small container">
+<p>Exception can be handled using try..except block:</p>
+<pre class="literal-block">
+try:
+  do_something()
+except ExceptionType:
+  handle_exception()
+except (ExceptionType1, ExceptionType2) as exc:
+  handle(exc)
+else:
+  hail_somebody_for_clean_execution()
+finally:
+  do_cleanup_anyway()
+</pre>
+</div>
+</div>
+<div class="slide" id="exception-hierarchy">
+<h1>Exception hierarchy</h1>
+<ul class="tiny simple">
+<li><tt class="docutils literal">BaseException</tt></li>
+</ul>
+<blockquote class="tiny">
+<ul class="simple">
+<li><tt class="docutils literal">SystemExit</tt></li>
+<li><tt class="docutils literal">KeyboardInterrupt</tt></li>
+<li><tt class="docutils literal">Exception</tt></li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal">StandardError</tt></li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal">ArithmeticError</tt></li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal">ZeroDivisionError</tt></li>
+<li><tt class="docutils literal">OvervlowError</tt></li>
+</ul>
+</blockquote>
+<ul class="simple">
+<li><tt class="docutils literal">LookupError</tt></li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal">IndexError</tt></li>
+<li><tt class="docutils literal">KeyError</tt></li>
+</ul>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</div>
+<div class="slide" id="id4">
+<h1></h1>
+<blockquote>
+<span class="huge">Useful stuff</span></blockquote>
+</div>
+<div class="slide" id="slots">
+<h1>Slots</h1>
+<div class="small incremental container">
+You may have noted that every object requires a dictionary instance for its
+<tt class="docutils literal">__dict__</tt>, which doesn't looks good for classes that contains one or two
+fields.</div>
 </div>
 </div>
 </body>
