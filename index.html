@@ -376,15 +376,28 @@ ul.auto-toc {
 <div class="contents handout topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#id1" id="id2"></a></li>
-<li><a class="reference internal" href="#history-of-glorious-python" id="id3">History of glorious Python</a></li>
-<li><a class="reference internal" href="#python-vs-abc-vs-c" id="id4">Python vs. ABC vs. C++</a></li>
-<li><a class="reference internal" href="#arithmetic-python" id="id5">Arithmetic Python</a></li>
-<li><a class="reference internal" href="#sequence-types" id="id6">Sequence types</a></li>
-<li><a class="reference internal" href="#mutable-sequence-operations" id="id7">Mutable sequence operations</a></li>
-<li><a class="reference internal" href="#sets-and-frozensets" id="id8">Sets and frozensets</a></li>
-<li><a class="reference internal" href="#dictionaries" id="id9">Dictionaries</a></li>
-<li><a class="reference internal" href="#logical-operations" id="id10">Logical operations</a></li>
+<li><a class="reference internal" href="#id1" id="id3"></a></li>
+<li><a class="reference internal" href="#history-of-glorious-python" id="id4">History of glorious Python</a></li>
+<li><a class="reference internal" href="#python-vs-abc-vs-c" id="id5">Python vs. ABC vs. C++</a></li>
+<li><a class="reference internal" href="#arithmetic-python" id="id6">Arithmetic Python</a></li>
+<li><a class="reference internal" href="#sequence-types" id="id7">Sequence types</a></li>
+<li><a class="reference internal" href="#mutable-sequence-operations" id="id8">Mutable sequence operations</a></li>
+<li><a class="reference internal" href="#sets-and-frozensets" id="id9">Sets and frozensets</a></li>
+<li><a class="reference internal" href="#dictionaries" id="id10">Dictionaries</a></li>
+<li><a class="reference internal" href="#logical-operations" id="id11">Logical operations</a></li>
+<li><a class="reference internal" href="#string-formatting" id="id12">String formatting</a></li>
+<li><a class="reference internal" href="#if-operator" id="id13">If operator</a></li>
+<li><a class="reference internal" href="#loops" id="id14">Loops</a></li>
+<li><a class="reference internal" href="#functions" id="id15">Functions</a></li>
+<li><a class="reference internal" href="#modules" id="id16">Modules</a></li>
+<li><a class="reference internal" href="#evals-in-python" id="id17">Evals in Python</a></li>
+<li><a class="reference internal" href="#evals-in-python-2" id="id18">Evals in Python 2</a></li>
+<li><a class="reference internal" href="#packages" id="id19">Packages</a></li>
+<li><a class="reference internal" href="#id2" id="id20"></a></li>
+<li><a class="reference internal" href="#module-sys" id="id21">Module: sys</a></li>
+<li><a class="reference internal" href="#module-os" id="id22">Module: os</a></li>
+<li><a class="reference internal" href="#module-os-walk" id="id23">Module: os.walk()</a></li>
+<li><a class="reference internal" href="#module-zipfile" id="id24">Module: zipfile</a></li>
 </ul>
 </div>
 <p>Overall course agenda:</p>
@@ -673,7 +686,572 @@ with <tt class="docutils literal">{}</tt> or <tt class="docutils literal"><span 
 empty collections (<tt class="docutils literal">()</tt>, <tt class="docutils literal">[]</tt>, <tt class="docutils literal">{}</tt>, <tt class="docutils literal">set()</tt>)</li>
 <li>operators: <tt class="docutils literal">and</tt>, <tt class="docutils literal">or</tt>, <tt class="docutils literal">not</tt></li>
 <li>comparsions: <tt class="docutils literal">&lt;</tt>, <tt class="docutils literal">&lt;=</tt>, <tt class="docutils literal">&gt;</tt>, <tt class="docutils literal">&gt;=</tt>, <tt class="docutils literal">==</tt>, <tt class="docutils literal">!=</tt>, <tt class="docutils literal">is</tt>, <tt class="docutils literal">is not</tt></li>
+<li>comparsions can be chuncked: <tt class="docutils literal">a &lt; b &lt; c &lt; d &lt; e</tt> ~ <tt class="docutils literal">(a&lt;b) and (b&lt;c) and (c&lt;d) and (d&lt;e)</tt></li>
 </ul>
+</div>
+<div class="slide" id="string-formatting">
+<h1>String formatting</h1>
+<!--  -->
+<blockquote class="tiny">
+<tt class="docutils literal">&quot;Where is my %dth <span class="pre">%s?&quot;</span> % (10, &quot;shoe&quot;)</tt></blockquote>
+<p class="tiny">Oldschool string formatting looks very much like formatting in C:</p>
+<blockquote class="tiny">
+<tt class="docutils literal"><span class="pre">%&lt;mapping&gt;&lt;flags&gt;&lt;width&gt;&lt;precision&gt;&lt;type&gt;</span></tt></blockquote>
+<p class="tiny">Where:</p>
+<ul class="tiny simple">
+<li><tt class="docutils literal">&lt;mapping&gt;</tt> can be reference to a key in mapping (if there is one after <tt class="docutils literal">%</tt> operator)
+like <tt class="docutils literal"><span class="pre">&quot;%(a)d</span> %(b)s&quot; % {'a': 1, 'b': &quot;as&quot;}</tt></li>
+<li><tt class="docutils literal">&lt;flags&gt;</tt> is zero or more flags:<ul>
+<li><tt class="docutils literal">0</tt> fills empty space to the right side of value with zeroes or spaces</li>
+<li><tt class="docutils literal">-</tt> ajusts value to the left hand</li>
+<li><tt class="docutils literal">+</tt> adds sign before numeral value</li>
+<li>`` `` adds space before positive numeral</li>
+</ul>
+</li>
+<li><tt class="docutils literal">&lt;width&gt;</tt> is field width</li>
+<li><tt class="docutils literal">&lt;precision&gt;</tt> is dot folowed by number of meaningful digits after the decimal point</li>
+<li><tt class="docutils literal">&lt;type&gt;</tt> is one of <tt class="docutils literal">s</tt>, <tt class="docutils literal">d</tt>, <tt class="docutils literal">o</tt>, <tt class="docutils literal">h</tt>, etc. Just like in C, but you'll need anything
+but <tt class="docutils literal">s</tt> very rarely.</li>
+</ul>
+<p class="tiny">Examples:</p>
+<table border="1" class="tiny borderless docutils">
+<colgroup>
+<col width="59%" />
+<col width="13%" />
+<col width="28%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><tt class="docutils literal">&quot;%05s&quot; % <span class="pre">(&quot;abc&quot;,)</span></tt></td>
+<td><tt class="docutils literal">=&gt;</tt></td>
+<td><tt class="docutils literal">&quot;&nbsp; abc&quot;</tt></td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">&quot;%-+7.2f&quot;</span> % (10.34567,)</tt></td>
+<td><tt class="docutils literal">=&gt;</tt></td>
+<td><tt class="docutils literal">&quot;+10.35 &quot;</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="if-operator">
+<h1>If operator</h1>
+<p class="small borderless">Python has no operator brackets. Neither {} from C nor begin..end from Pascal
+survived. Blocks are distinguised by indent (spaces or tabs, tabs are bad).
+Colon is for clearness only.</p>
+<p class="small borderless">There is no switch operator in Python, it can be modeled by if..elif.</p>
+<table border="1" class="small borderless docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="incremental first last container">
+<p>Basic:</p>
+<pre class="literal-block">
+if cond1:
+  op1
+elif cond2:
+  op2
+elif cond3:
+  op3
+else:
+  op4
+</pre>
+</div>
+</td>
+<td><div class="incremental first last container">
+<p>switch-like:</p>
+<pre class="literal-block">
+if a == 1:
+  op1
+elif a == 2:
+  op2
+elif a == 3:
+  op3
+else:
+  op4
+</pre>
+</div>
+</td>
+<td><div class="incremental first last container">
+<p>False conds are:</p>
+<ul class="simple">
+<li>None</li>
+<li>False</li>
+<li>0, 0L, 0.0, 0+0j</li>
+<li>(), [], {}, set()</li>
+<li>any other object
+that can tell us
+that it's false or
+empty or zero</li>
+</ul>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="loops">
+<h1>Loops</h1>
+<table border="1" class="tiny borderless docutils">
+<colgroup>
+<col width="48%" />
+<col width="52%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><p class="first">There are just two loops:</p>
+<div class="incremental last container">
+<p><tt class="docutils literal">while</tt> loop is as simple as</p>
+<pre class="literal-block">
+while cond1:
+  op1
+</pre>
+<p>Nothing special</p>
+</div>
+</td>
+<td rowspan="2"><div class="incremental first last container">
+<p><tt class="docutils literal">for</tt> loop is way more powerfull:</p>
+<pre class="literal-block">
+for name in sequence:
+  ops
+</pre>
+<p><tt class="docutils literal">name</tt> iterates over each element of
+sequence. Sequence can be string, tuple,
+list, set, dict or of any other type that
+defines itself as iterable. If you iterate over
+dict, you iterate over its keys.</p>
+</div>
+</td>
+</tr>
+<tr><td rowspan="2"><div class="incremental first last container">
+<p>If you want to mimic ordinal C for loop:</p>
+<pre class="literal-block">
+for (i=0; i&lt;5; i++)
+</pre>
+<p>You should use <tt class="docutils literal">range</tt> func:</p>
+<pre class="literal-block">
+for i in range(5):
+</pre>
+<p><tt class="docutils literal">range</tt> can take up to 3 args like slice
+operator:</p>
+<pre class="literal-block">
+range(3) == [0,1,2]
+range(2,4) == [2,3]
+range(1,4,2) == [1,3]
+</pre>
+</div>
+</td>
+</tr>
+<tr><td><div class="incremental first container">
+<p>To iterate over sequence with index, use
+<tt class="docutils literal">enumerate</tt> function:</p>
+<pre class="literal-block">
+for i,e in enumerate(seq):
+</pre>
+<p>Here <tt class="docutils literal">i</tt> will be zero-based index of element
+in <tt class="docutils literal">e</tt> while <tt class="docutils literal">e</tt> iterates over sequence as
+usual</p>
+</div>
+<div class="incremental last container">
+<p>Note that you can use this comma trick in
+assignment:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="43%" />
+<col width="3%" />
+<col width="54%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><tt class="docutils literal">a,b = (1,2)</tt></td>
+<td>~</td>
+<td><tt class="docutils literal">a=1; b=2</tt></td>
+</tr>
+<tr><td><tt class="docutils literal">a,b = b,a</tt></td>
+<td>~</td>
+<td><tt class="docutils literal">_t=a; a=b; b=_t</tt></td>
+</tr>
+</tbody>
+</table>
+<p>It's named packing (on the left side) and
+unpacking (on the right one).</p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="functions">
+<h1>Functions</h1>
+<table border="1" class="tiny borderless docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><p class="first">Functions are defined like this:</p>
+<pre class="literal-block">
+def f(param1, param2, param3):
+  op1
+  op2
+  return value
+</pre>
+<div class="incremental container">
+<p>Note that you can use packing to return several
+values at a time:</p>
+<pre class="literal-block">
+def f(a,b,c):
+  return a+b, b+c
+
+x, y = f(1,2,3) # x==3; y==5
+</pre>
+</div>
+<div class="incremental container">
+<p>You can set a default values to arguments and
+pass only necessary ones:</p>
+<pre class="literal-block">
+def f(a,b,c=4,d=5):
+  pass
+
+f(a,b,d=8)
+</pre>
+</div>
+<div class="incremental last container">
+<p>Note that you should use <tt class="docutils literal">global</tt> to modify global vars:</p>
+<pre class="literal-block">
+a, b = 1, 2
+def f():
+  global a
+  a, b = 3, 4
+f() # a==3, b==2
+</pre>
+</div>
+</td>
+<td><div class="incremental first container">
+<p>You even can pass all parameters at once:</p>
+<pre class="literal-block">
+args = [1,2,3,4]
+f(*args) # =&gt; f(1,2,3,4)
+</pre>
+</div>
+<!-- ** -->
+<div class="incremental container">
+<p>Or receive variable number of parameters:</p>
+<pre class="literal-block">
+def f(*args):
+  pass
+
+f(1,2,3,4) # =&gt; args == (1,2,3,4)
+</pre>
+<!-- ** -->
+</div>
+<div class="incremental container">
+<p>You can do bulk passing with skipped args
+too:</p>
+<pre class="literal-block">
+args = [1,2,3,4]
+kwargs = {'d': 5, 'e': 6}
+f(*args,**kwargs) # ~ f(1,2,3,4,d=5,e=6)
+</pre>
+<!-- ** -->
+</div>
+<div class="incremental last container">
+<p>And receive them too:</p>
+<pre class="literal-block">
+def f(a,b,**kwargs): pass
+f(1,2,f=5,z=4) # =&gt; a==1,b==2,
+               # kwargs=={'f':5,'z':4}
+</pre>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="modules">
+<h1>Modules</h1>
+<p class="small borderless">Every <tt class="docutils literal">.py</tt> file is a module in Python. You can use it from outside easily:</p>
+<table border="1" class="small borderless docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><p class="first">a.py</p>
+<pre class="last literal-block">
+def f(a,b):
+  return a**2 + b**2
+C = 25
+</pre>
+</td>
+<td><p class="first">b.py</p>
+<pre class="last literal-block">
+import a
+assert a.f(2,3) == a.C
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="small borderless">Modules are looked for in directories in <tt class="docutils literal">sys.path</tt> list:</p>
+<table border="1" class="small borderless docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><pre class="first last literal-block">
+import sys
+sys.path.append('path/to/my/modules')
+import mymodule
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="small borderless">Note that module's body is executed on import.</p>
+</div>
+<div class="slide" id="evals-in-python">
+<h1>Evals in Python</h1>
+<div class="small borderless incremental container">
+<p>Function <tt class="docutils literal">eval</tt> evaluates string of Python code in some context:</p>
+<pre class="literal-block">
+globals = {'a': 1}
+locals = {'b': 2}
+eval(&quot;a,b = 3,4&quot;, globals, locals)
+    # globals=={'a': 1}, locals=={'b': 4}
+</pre>
+</div>
+<div class="small borderless incremental container">
+You can access global and local dicts of curren block with <tt class="docutils literal">globals()</tt> and
+<tt class="docutils literal">locals()</tt> functions. <tt class="docutils literal">a = 1</tt> is equivalent of <tt class="docutils literal"><span class="pre">locals()['a']</span> = 1</tt>.</div>
+<div class="small borderless incremental container">
+<p>So <tt class="docutils literal">import &lt;name&gt;</tt> process looks like this:</p>
+<pre class="literal-block">
+filename = find_module(&quot;&lt;name&gt;&quot;)
+body = open(filename).read()
+&lt;name&gt; = module(&quot;&lt;name&gt;&quot;)
+eval(compile(body, filename, 'exec'), {}, &lt;name&gt;.__dict__)
+</pre>
+</div>
+</div>
+<div class="slide" id="evals-in-python-2">
+<h1>Evals in Python 2</h1>
+<table border="1" class="small borderless docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="incremental first last container">
+<p>And you can use it to argument your module depending on some external
+conditions:</p>
+<table border="1" class="borderless docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><p class="first">a.py:</p>
+<pre class="last literal-block">
+if we_got_windows:
+  def do_it():
+    do_it_windows_style()
+else:
+  def do_it():
+    do_it_easy_way()
+</pre>
+</td>
+</tr>
+<tr><td><p class="first">b.py:</p>
+<pre class="last literal-block">
+import a
+do_it() # Will do it right way
+        # on any OS
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</td>
+<td><div class="incremental first last container">
+<p>By the way, functions can use this dynamic too:</p>
+<pre class="literal-block">
+def get_f(zero, value):
+  if zero:
+    def f(a):
+      return 0
+  else:
+    def f(a):
+      return a*value
+  return f
+f1 = get_f(True, 5)
+f2 = get_f(False, 5)
+f1(4) # =&gt; 0
+f2(4) # =&gt; 20
+</pre>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="packages">
+<h1>Packages</h1>
+<div class="small container">
+<p>Modules can be grouped into modules - directories with special
+<tt class="docutils literal">__init__.py</tt> file. Contents of this file are attached to package and
+all modules inside this package become accessible through the dot after
+package name:</p>
+<table border="1" class="borderless docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><p class="first">a/__init__.py:</p>
+<pre class="last literal-block">
+CC = 5
+</pre>
+</td>
+<td><p class="first">a/bb.py:</p>
+<pre class="last literal-block">
+ZZ = 6
+</pre>
+</td>
+<td><p class="first">main.py:</p>
+<pre class="last literal-block">
+import a
+a.CC # works
+a.bb # error - a.bb is not imported yet
+import a.bb
+a.bb.ZZ # works
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="slide" id="id2">
+<h1></h1>
+<p><span class="huge">Standard Library</span></p>
+<blockquote>
+There is about 200 standard modules and packages in Python. We'll look into
+some of them.</blockquote>
+</div>
+<div class="slide" id="module-sys">
+<h1>Module: sys</h1>
+<p class="small">Contains lots of OS-agnostic runtime interpretator's stuff</p>
+<table border="1" class="small docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><tt class="docutils literal">argv</tt></td>
+<td>like (argc, argv) in C</td>
+</tr>
+<tr><td><tt class="docutils literal">exit(n)</tt></td>
+<td>exit with status n (default 0), like <tt class="docutils literal">return</tt> from <tt class="docutils literal">main</tt> in C</td>
+</tr>
+<tr><td><tt class="docutils literal">platform</tt></td>
+<td>current platform (linux, windows, darwin)</td>
+</tr>
+<tr><td><tt class="docutils literal">stdin</tt>, <tt class="docutils literal">stdout</tt>, <tt class="docutils literal">stderr</tt></td>
+<td>standard i/o streams</td>
+</tr>
+<tr><td><tt class="docutils literal">version</tt></td>
+<td>Python's version</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="module-os">
+<h1>Module: os</h1>
+<p class="small">OS-specific stuff, partly available on all OS's</p>
+<table border="1" class="small docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><tt class="docutils literal">environ</tt></td>
+<td>dict containing all OS environment variables</td>
+</tr>
+<tr><td><tt class="docutils literal">curdir</tt></td>
+<td>symbol for current dir (dot)</td>
+</tr>
+<tr><td><tt class="docutils literal">sep</tt>, <tt class="docutils literal">altsep</tt></td>
+<td>path separator (<tt class="docutils literal">\</tt> or <tt class="docutils literal">/</tt> or even <tt class="docutils literal">:</tt>)</td>
+</tr>
+<tr><td><tt class="docutils literal">pathsep</tt></td>
+<td>paths list separator (<tt class="docutils literal">:</tt> or <tt class="docutils literal">;</tt>)</td>
+</tr>
+<tr><td><tt class="docutils literal">linesep</tt></td>
+<td>line separator (<tt class="docutils literal">\n</tt> or <tt class="docutils literal">\n</tt> or <tt class="docutils literal">\r\n</tt>)</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="small docutils">
+<colgroup>
+<col width="35%" />
+<col width="65%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><tt class="docutils literal">chdir(dir)</tt></td>
+<td>change current dir</td>
+</tr>
+<tr><td><tt class="docutils literal">getcwd()</tt></td>
+<td>get current dir</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">chmod(path[,mode])</span></tt></td>
+<td>change file access flags (n/a on Windows)</td>
+</tr>
+<tr><td><tt class="docutils literal">listdir(dir)</tt></td>
+<td>contents of dir</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">mkdir(dir[,mode])</span></tt></td>
+<td>create dir with access flags</td>
+</tr>
+<tr><td><tt class="docutils literal">remove(path)</tt></td>
+<td>delete file</td>
+</tr>
+<tr><td><tt class="docutils literal">rmdir(path)</tt></td>
+<td>delete dir</td>
+</tr>
+<tr><td><tt class="docutils literal">rename(src,dst)</tt></td>
+<td>rename path</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="module-os-walk">
+<h1>Module: os.walk()</h1>
+<p class="small">Function <tt class="docutils literal">os.walk(dir)</tt> allows you to walk around directory tree.</p>
+<pre class="small literal-block">
+for root, dirs, files in os.walk(dir):
+  print &quot;In dir %s:&quot; % (root,)
+  print &quot;Dirs:&quot;
+  for d in dirs:
+    print d
+  print &quot;Files:&quot;
+  for f in files:
+    print f
+</pre>
+</div>
+<div class="slide" id="module-zipfile">
+<h1>Module: zipfile</h1>
+<p class="small">Everything for your zip file management:</p>
+<pre class="small literal-block">
+import zipfile
+
+f = zipfile.ZipFile('myfile.zip','a')
+                        # can be 'r' or 'w'
+f.write('myfile.txt')
+f.write('theirfile.txt', 'othername.txt')
+print f.open('somefile.txt').read()
+f.close()
+</pre>
 </div>
 </div>
 </body>
