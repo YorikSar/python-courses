@@ -5,7 +5,7 @@ page: .html/index.html
 
 git: page
 	cd .html;\
-		if [ "$(git status -s)" ]; then \
+		if [ "$$(git status -s)" ]; then \
 			git commit -am "Update to master branch" && git push; \
 		fi
 
