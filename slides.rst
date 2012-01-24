@@ -568,7 +568,7 @@ Module: os
    ``curdir``          symbol for current dir (dot)
    ``sep``, ``altsep`` path separator (``\`` or ``/`` or even ``:``)
    ``pathsep``         paths list separator (``:`` or ``;``)
-   ``linesep``         line separator (``\n`` or ``\n`` or ``\r\n``)
+   ``linesep``         line separator (``\r`` or ``\n`` or ``\r\n``)
    =================== ==============================
    
    ====================== =========================================
@@ -614,3 +614,537 @@ Module: zipfile
     print f.open('somefile.txt').read()
     f.close()
 
+\ 
+===============
+
+ :huge:`Object Oriented Programming in Python`
+
+Basic types hierarchy
+=====================
+
+.. class:: small
+
+ * ``object``
+  
+  - ``NoneType`` - singletone ``None``
+  - ``NotImplementedType`` - singletone ``NotImplemented``
+  - ``numbers.Number``
+ 
+   * ``numbers.Integral`` - ``int``, ``long``, ``bool``
+   * ``numbers.Real`` - ``float``
+   * ``numbers.Complex`` - ``complex``
+ 
+  - ``basestring``
+   
+   * ``str`` (``types.StringType``)
+   * ``unicode`` (``types.UnicodeType``)
+
+Old-style classes
+=================
+
+.. class:: center incremental big
+
+  `Forget about them`
+
+New-style classes
+=================
+
+.. class:: tiny
+
+ .. list-table::
+  :class: borderless
+
+  * - .. class:: incremental
+
+       .. container::
+
+        Classes are declared like this:: 
+
+         class C(object):
+           cls_var = 123
+           def __init__(self, param):
+             self.obj_var = param
+             self.cls_var += 1
+           def f(self):
+             print self.cls_var, self.obj_var
+
+       .. container::
+
+        Objects are created by calling a class::
+
+         c = C(123)
+         # ~
+         c = C.__new__(123)
+         c.__init__(123)
+
+       .. container::
+
+        Inheritance can be done as usual::
+         
+         class A(object):
+           a = 1
+         class B(A):
+           b = 2
+         class C(B):
+           b = 3
+
+    - .. class:: incremental
+
+       .. container::
+
+        Note that Python is very dynamic::
+
+         class WeGetSignal(all_your_base()):
+           """How are you gentlemen"""
+           if are_belong_to_us():
+             def make_your_time(self):
+               move_zig()
+           else:
+             def make_your_time(self):
+               for_greate_justice()
+
+       .. container::
+
+        In fact, class declaration equals to something like this::
+
+         bases = (object,)
+         body = "cls_var=123\ndef __init__(self, param):......"
+         _attrs = {}
+         eval(compile(body,__name__,'exec'),globals(),_attrs)
+         C = type("C", bases, _attrs)
+
+       .. container::
+
+        You can not hide a name inside class, but you can::
+
+         class C(object):
+           _hint_to_hide = 0
+               # polite programmers will not touch it
+           def __obscure_hide():
+               # will be converted to _C__obscure_hide
+             pass
+
+Special methods
+===============
+
+.. class:: small incremental
+
+ All that ``__methods__`` are special methods, they are used instead of 
+ operator overloading and lots of other class tuning. Examples:
+
+ * ``__new__`` - create object or fine-tune object creation, mostly used in
+   metaclasses;
+ * ``__init__`` - constructor, object's variables declaration;
+ * ``__del__`` is called when object is destroyed, but not necessary;
+ * ``__str__``, ``__repr__`` are used to convert object to string like
+   ``str(obj)`` or ``repr(obj)``, remember ``%s`` and ``%r`` formatting
+ * ``__lt__``, ``__le__``, ``__gt__``, ``__ge__``, ``__eq__``, ``__ne__`` are
+   used by all that comparsion operators, so that for example ``a<b`` is
+   equivalent to ``a.__lt__(b)`` or ``b.__gt__(a)`` if the first one is not
+   implemented or returns ``NotImplemented``
+ * ``__cmp__`` does all what the previous ones does, returning negative,
+   positive values or zero if object is less, greater or equals the parameter
+   respectively.
+
+
+Protocols
+=========
+
+.. class:: small
+
+ There is number of so called protocols in Python. Protocol is some rules about
+ class or object that must be met to make built-in functions work. 
+
+ .. list-table::
+  :class: borderless
+
+  * - .. class:: incremental
+
+       .. container::
+
+        For example, ``for`` loop::
+  
+         for v in obj:
+           do_it(v)
+  
+        equals to ::
+         
+         _it = obj.__iter__()
+         while True:
+           try:
+             v = _it.next()
+           except StopIteration:
+             break
+           do_it(v)
+
+    - .. class:: incremental
+
+       So, iterator protocol requires:
+    
+       * container to have ``__iter__`` method (which can be called throgh
+         ``iter(obj)`` built-in) that returns iterator;
+       * iterator to have ``next`` method which returns next element or raises
+         ``StopIteration`` exception when passed through the end of container;
+       * iterator to have ``__iter__`` method that returns iterator itself,
+         just for completeness.
+
+Decorators
+==========
+
+.. class:: tiny borderless
+ 
+ .. list-table::
+
+  * - .. class:: incremental
+
+       .. container::
+
+        ::
+
+         @decorate
+         def f(): pass
+
+        equals to::
+
+         def f(): pass
+         f = decorate(f)
+
+       .. container::
+
+        you can do some function call::
+
+         @decorate('like this')
+         def f(): pass
+
+       .. container::
+
+        and you can decorate classes::
+
+         @shiny
+         class C(object): pass
+    - .. class:: incremental
+
+       .. container::
+
+        decorators usually look like this::
+
+         def decorate1(f):
+           def _wrapped(*args,**kwargs):
+             print "%s(*%s,**%s)" % \
+                 (f.__name__,args,kwargs)
+             return f(*args,**kwargs)
+           return _wrapped
+
+        .. **
+       .. container::
+        
+        or like this::
+
+         def decorate2(kind):
+           def __inner(f):
+             def _wrapped(*args,**kwargs):
+               print "%s %s(*%s,**%s)" % \
+                   (kind,f.__name__,args,kwargs)
+               return f(*args,**kwargs)
+             return _wrapped
+           return __inner
+
+        .. **
+
+ .. list-table::
+
+  * - .. class:: incremental
+
+       .. container::
+
+        so that:
+
+        .. list-table::
+         :class: borderless
+
+         * - ::
+
+              @decorate1
+              def f1(a): return a+1
+
+              @decorate2('Cute')
+              def f2(a): return a-1
+           - ::
+
+              @decorate2('Shiny')
+              def f3(a): return a*2
+    - .. class:: incremental
+
+       .. container::
+
+        .. list-table::
+         :class: borderless
+
+         * - will cause::
+              
+              print f1(1)
+              print f2(a=2)
+              print f3(3,a=3)
+
+           - to print::
+              
+              f1((1,),{})
+              2
+              Cute f2((),{'a':2})
+              1
+              Shiny f3((3,),{'a':3})
+              ### ERROR!!!! ###
+
+Class and static methods
+========================
+
+.. class:: tiny
+
+ Of course you want to have methods bound not to object, but to class, or even
+ unbound method encapsulated into class namespace.
+
+ .. list-table::
+  :class: borderless
+
+  * - .. class:: incremental
+    
+       .. container::
+
+        Class methods are bound to current class::
+
+         class A(object):
+           @classmethod
+           def f(cls):
+             return "%s.f" % (cls.__name__,)
+
+         class B(A): pass
+
+         A.f(), B.f() # => "A.f", "B.f"
+
+       .. container::
+
+        Static methods are totally unbound::
+
+         class C(object):
+           @staticmethod
+           def f(): # No cls, no self
+             pass
+
+       Bound methods are methods which already have first argument substituted.
+    - .. class:: incremental
+      
+       .. container::
+
+        Let's say, you have::
+
+         class A(object):
+           def m(self): pass
+           @classmethod
+           def cls_m(cls): pass
+           @staticmethod
+           def st_m(): pass
+         
+         class B(A): pass
+
+         a = A(); b = B()
+
+       .. container::
+
+        Then methods will be bound like this:
+
+        .. list-table::
+         :header-rows: 1
+         :class: center
+
+         * - f
+           - ``A.f``
+           - ``B.f``
+           - ``a.f``
+           - ``b.f``
+         * - ``m``
+           - no
+           - no
+           - ``a``
+           - ``b``
+         * - ``cls_m``
+           - ``A``
+           - ``B``
+           - ``A``
+           - ``B``
+         * - ``st_m``
+           - no
+           - no
+           - no
+           - no
+
+       .. container::
+
+        To access overloaded method, you should use built-in method ``super``::
+
+         super(C,obj).meth # => meth bound to a parent of C
+
+       Yes, I'm lying again.
+
+Properties
+==========
+
+.. class:: small
+ 
+ .. list-table::
+  :class: borderless
+
+  * - .. class:: incremental
+      
+       .. container::
+       
+        Sometimes you want some syntax sugar to make your life easier and access
+        computed values as object's fields, not as method result::
+       
+         class C(object):
+           def getx(self):
+             return self._x
+           def setx(self,value):
+             self._x = value
+           def delx(self):
+             del self._x
+           x = property(getx, setx, delx)
+
+       .. container::
+
+         So that::
+
+          c.x       # ~ c.getx()
+          c.x = 123 # ~ c.setx(123)
+          del c.x   # ~ c.delx()
+     
+    - .. class:: incremental
+    
+       .. container::
+          
+        Note that all arguments except the first one are optional, so ``property`` can
+        be used as decorator::
+       
+         class C(object):
+           @property
+           def x(self):
+             return self._x
+           @x.setter
+           def x(self,value):
+             self._x = value
+           @x.deleter
+           def x(self):
+             del self._x
+
+Attribute lookup
+================
+
+.. class:: small incremental
+ 
+ .. container::
+  
+  You may wonder how ``.`` "operator" works. Here are few easy steps:
+ 
+  #. look in obj.__dict__
+  #. look in type(obj) and its parents
+  #. call ``__getattr__``, ``__setattr__`` or ``__delattr__``
+ 
+ .. container::
+  
+  So default behaviour can be mimiced like this::
+   
+   class C(object):
+     def __getattr__(self,name):
+       try:
+         return self.__dict__[name]
+       except KeyError:
+         raise AttributeError
+     def __setattr__(self,name,value):
+       self.__dict__[name] = value
+     def __delattr__(self,name):
+       del self.__dict__[name]
+
+Exceptions
+==========
+
+.. class:: small incremental
+
+ Python supports very common exception handling process: if comewhere some
+ error occurs, exception is raised at that level, then stack is unwinded to
+ find first sutable exception handler, which is then executed.
+
+ Raised exception consists of type, value and traceback. They can be retrieved
+ with ``sys.exc_info()`` call.
+
+ .. container::
+
+  Whole syntax of ``raise`` statement is::
+
+   raise [<type>[,<value>[,<traceback>]]]]
+ 
+ When called without arguments, it reraises last raised exception (or raises
+ ``TypeError`` if there isn't one).
+
+ When called with one argument, it can be either exception type (which is
+ instantiated and raised)or exception object (which is just raised).
+
+ Traceback is set to current location in stack or to the third argument, if it
+ is present.
+
+Exception handling
+==================
+
+.. class:: small
+
+ .. container::
+
+  Exception can be handled using try..except block::
+ 
+   try:
+     do_something()
+   except ExceptionType:
+     handle_exception()
+   except (ExceptionType1, ExceptionType2) as exc:
+     handle(exc)
+   else:
+     hail_somebody_for_clean_execution()
+   finally:
+     do_cleanup_anyway()
+
+Exception hierarchy
+===================
+
+.. class:: tiny
+
+ * ``BaseException``
+
+  * ``SystemExit``
+  * ``KeyboardInterrupt``
+  * ``Exception``
+   
+   * ``StandardError``
+
+    * ``ArithmeticError``
+     
+     * ``ZeroDivisionError``
+     * ``OvervlowError``
+
+    * ``LookupError``
+
+     * ``IndexError``
+     * ``KeyError``
+
+\ 
+===
+
+ :huge:`Useful stuff`
+
+Slots
+=====
+
+.. class:: small incremental
+ 
+ .. container::
+
+  You may have noted that every object requires a dictionary instance for its
+  ``__dict__``, which doesn't looks good for classes that contains one or two
+  fields.
