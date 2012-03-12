@@ -412,7 +412,11 @@ ul.auto-toc {
 <li><a class="reference internal" href="#exception-handling" id="id38">Exception handling</a></li>
 <li><a class="reference internal" href="#exception-hierarchy" id="id39">Exception hierarchy</a></li>
 <li><a class="reference internal" href="#id4" id="id40"></a></li>
-<li><a class="reference internal" href="#slots" id="id41">Slots</a></li>
+<li><a class="reference internal" href="#generators" id="id41">Generators</a></li>
+<li><a class="reference internal" href="#generator-functions" id="id42">Generator functions</a></li>
+<li><a class="reference internal" href="#context-managers" id="id43">Context managers</a></li>
+<li><a class="reference internal" href="#slots" id="id44">Slots</a></li>
+<li><a class="reference internal" href="#metaclasses" id="id45">Metaclasses</a></li>
 </ul>
 </div>
 <p>Overall course agenda:</p>
@@ -1837,12 +1841,304 @@ finally:
 <blockquote>
 <span class="huge">Useful stuff</span></blockquote>
 </div>
+<div class="slide" id="generators">
+<h1>Generators</h1>
+<p class="tiny">Let's say, you want to create some sequence of elements that require some
+computation, e.g. sequence of logarithms of counting numerals.</p>
+<table border="1" class="borderless tiny docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="incremental first container">
+<p>You can create a function returning list of necessary length:</p>
+<pre class="literal-block">
+def logs(n):
+  res = []
+  for i in range(1,n+1):
+    res.append(math.log(i))
+  return res
+</pre>
+</div>
+<p class="incremental">But it consumes a lot of memory for big <tt class="docutils literal">n</tt> and a very lot of time to
+compute the whole thing</p>
+<div class="incremental last container">
+<p>Remember iterator protocol? You can use it:</p>
+<pre class="literal-block">
+class logs(object):
+  def __init__(self, n):
+    self.i = 0
+    self.n = n
+  def __iter__(self):
+    return self
+  def next(self):
+    if self.i &gt;= self.n:
+      raise StopIteration
+    else:
+      self.i += 1
+      return math.log(self.i)
+</pre>
+</div>
+</td>
+<td><p class="incremental first">It doesn't consume more memory for bigger <tt class="docutils literal">n</tt> and computes values as
+they needed, but it looks <em>ugly</em>.</p>
+<div class="incremental container">
+<p>So they decided to make life easier and let ugly iterators look like
+cute functions:</p>
+<pre class="literal-block">
+def logs(n):
+  for i in range(1,n+1):
+    yield math.log(i)
+</pre>
+<p>It almost equivalent to previous class, but uses 3 lines.</p>
+</div>
+<div class="incremental container">
+<p>Since such logic is very popular, there is even shorter option:</p>
+<pre class="literal-block">
+(math.log(i) for i in range(1,n+1))
+</pre>
+</div>
+<p class="incremental">Or if you want a list, just use <tt class="docutils literal">[]</tt> instead of <tt class="docutils literal">()</tt>.</p>
+<div class="incremental container">
+<p>Generator expressions support filtering too:</p>
+<pre class="literal-block">
+(math.log(i) for i in range(1,n+1) if i%2==1)
+</pre>
+</div>
+<div class="incremental last container">
+<p>This <tt class="docutils literal">for</tt>-<tt class="docutils literal">if</tt>s can even be nested (just like usual <tt class="docutils literal">for</tt>s
+and <tt class="docutils literal">if</tt>s:</p>
+<pre class="literal-block">
+(a+b for a in range(5) if a%2==0 \
+     for b in range(2*a) if b%4==1)
+</pre>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="generator-functions">
+<h1>Generator functions</h1>
+<table border="1" class="borderless tiny docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="incremental first container">
+<p>Look at this generator function:</p>
+<pre class="literal-block">
+def gen(param):
+  startup()
+  yield start_value
+  while main_loop():
+    do_logic()
+    yield intermediate
+    if do_more_logic():
+      yield something_other
+</pre>
+</div>
+<div class="incremental last container">
+<p>It looks very much like coroutine, so after a lot of efforts they made
+coroutines almost clear in Python:</p>
+<pre class="literal-block">
+def player(game):
+  collect_chips()
+  yield READY
+  while True:
+    try:
+      compute_bet()
+      their_bets = (yield our_bet)
+    except TableFolded:
+      gather_chips()
+      move_to_next_table()
+    except GeneratorExit:
+      exchange_chips()
+      break
+</pre>
+</div>
+</td>
+<td><div class="incremental first container">
+<p>Note that <tt class="docutils literal">yield</tt>s now can expect some return values, and even can
+be source of exceptions. This is achieved through this methods of
+generators produced by this functions:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><tt class="docutils literal">next()</tt></td>
+<td>old one, does nothing special</td>
+</tr>
+<tr><td><tt class="docutils literal">send(value)</tt></td>
+<td>injects <tt class="docutils literal">value</tt> as result of <tt class="docutils literal">yield</tt></td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">throw(t[,v[,tb]])</span></tt></td>
+<td>raises exception at the point of <tt class="docutils literal">yield</tt></td>
+</tr>
+<tr><td><tt class="docutils literal">close()</tt></td>
+<td>raises <tt class="docutils literal">GeneratorExit</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="incremental last">Every call resumes generator at the point it was paused and returns
+value gathered by next <tt class="docutils literal">yield</tt> or propagates any unhandled exception
+occured inside generator. <tt class="docutils literal">close</tt> is special since it silently eats
+<tt class="docutils literal">StopIteration</tt> and <tt class="docutils literal">GeneratorExit</tt> exceptions and raises
+<tt class="docutils literal">RuntimeError</tt> if generator tries to return something more to caller.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="context-managers">
+<h1>Context managers</h1>
+<table border="1" class="borderless tiny docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="incremental first container">
+<p>You might remember that parrern that appeared around file handling
+(archives in our case):</p>
+<pre class="literal-block">
+fil = open('thefile', 'w')
+fil.write(smth)
+process(fil)
+fil.close()
+</pre>
+</div>
+<div class="incremental container">
+<p>But what will happen if we get come error e.g. in <tt class="docutils literal">process()</tt>?
+<tt class="docutils literal">fil</tt> will remain open with proper consequences. So we should use
+<tt class="docutils literal">finally</tt>:</p>
+<pre class="literal-block">
+fil = open('thefile', 'w')
+try:
+  fil.write(smth)
+  process(fil)
+finally:
+  fil.close()
+</pre>
+</div>
+<div class="incremental last container">
+<p>Here is inconsistence: we have to remember what cleanup operations
+should be done after the work with object is done. Here come context
+managers:</p>
+<pre class="literal-block">
+with open('thefile', 'w') as fil:
+  fil.write(smth)
+  process(fil)
+</pre>
+</div>
+</td>
+<td><div class="incremental first container">
+<p>Context manager protocol consists of two methods:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><tt class="docutils literal">__enter__</tt></td>
+<td>called at <tt class="docutils literal">with</tt>, returned value goes to variable after
+<tt class="docutils literal">as</tt></td>
+</tr>
+<tr><td><tt class="docutils literal">__exit__</tt></td>
+<td>called when block ends with exception's triplet (or
+<tt class="docutils literal">None</tt>s)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="incremental">Note that variable after <tt class="docutils literal">as</tt> gets not context manager itself, but
+some other value returned by <tt class="docutils literal">__enter__</tt> (well, in case of <tt class="docutils literal">file</tt>,
+it is <tt class="docutils literal">self</tt>).</p>
+<p class="incremental">There is couple of handy methods in <tt class="docutils literal">contextlib</tt> (in number of 2):</p>
+<ul class="incremental last">
+<li><p class="first"><tt class="docutils literal">closing</tt> closes everything that can be closed:</p>
+<pre class="literal-block">
+with closing(socket()) as sock:
+  sock.connect(....)
+  ....
+</pre>
+</li>
+<li><p class="first"><tt class="docutils literal">contextmanager</tt> decorator allows you to create a context manager
+without all that <tt class="docutils literal">__</tt> burden:</p>
+<pre class="literal-block">
+&#64;contextlib.contextmanager
+def closing(obj):
+  try:
+    yield obj
+  finally:
+    obj.close()
+</pre>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="slide" id="slots">
 <h1>Slots</h1>
 <div class="small incremental container">
 You may have noted that every object requires a dictionary instance for its
 <tt class="docutils literal">__dict__</tt>, which doesn't looks good for classes that contains one or two
 fields.</div>
+<div class="small incremental container">
+<p>For such types you can list all possible attributes in <tt class="docutils literal">__slots__</tt> and then
+no dict will be created:</p>
+<pre class="literal-block">
+class Slots(object):
+  __slots__ = ('a', 'b', 'c')
+  def __init__(self):
+    self.a = 1
+    self.b = 2
+    self.cc = 3  # AttributeError!
+</pre>
+</div>
+<p class="small incremental">Couple of facts:</p>
+<ul class="small incremental simple">
+<li>if you need to add not listed attribute, add <tt class="docutils literal">__dict__</tt> to <tt class="docutils literal">__slots__</tt>
+list;</li>
+<li>if one of base classes already have <tt class="docutils literal">__dict__</tt>, slots definition is
+meaningless;</li>
+<li>derived classes will have <tt class="docutils literal">__dict__</tt> by default;</li>
+<li>you can not set default values for slots in class level, it'll overwrite
+slot's meaning.</li>
+</ul>
+</div>
+<div class="slide" id="metaclasses">
+<h1>Metaclasses</h1>
+<div class="small incremental container">
+<p>Remember class creation process? You can tweak even this part!</p>
+<pre class="literal-block">
+bases = (object,)
+body = &quot;cls_var=123\ndef __init__(self, param):......&quot;
+_attrs = {}
+eval(compile(body,__name__,'exec'),globals(),_attrs)
+C = type(&quot;C&quot;, bases, _attrs)
+</pre>
+</div>
+<div class="small incremental container">
+After this code, <tt class="docutils literal">C</tt> becomes an object of class <tt class="docutils literal">type</tt>. And you can
+inherit from class <tt class="docutils literal">type</tt> just like from any other class.</div>
+<div class="small incremental container">
+<pre class="literal-block">
+class my_type(type):
+  def __new__(mcs, name, bases, attrs):
+    # do anything you want with attrs, for example
+    return super(my_type,mcs).__new__(mcs, name, bases, attrs)
+</pre>
+</div>
+<p class="small incremental">Frameworks use this to add custom getters/setters to this class or some
+classes connected to it, you can replace or tweak any method of new class.</p>
 </div>
 </div>
 </body>
