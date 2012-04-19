@@ -1138,6 +1138,232 @@ Exception hierarchy
 
  :huge:`Useful stuff`
 
+Generators
+==========
+
+.. class:: tiny
+ 
+ Let's say, you want to create some sequence of elements that require some
+ computation, e.g. sequence of logarithms of counting numerals.
+
+ .. list-table::
+  :class: borderless
+
+  * - .. class:: incremental
+       
+       .. container::
+        
+        You can create a function returning list of necessary length::
+      
+         def logs(n):
+           res = []
+           for i in range(1,n+1):
+             res.append(math.log(i))
+           return res
+
+       But it consumes a lot of memory for big ``n`` and a very lot of time to
+       compute the whole thing
+
+       .. container::
+
+        Remember iterator protocol? You can use it::
+
+         class logs(object):
+           def __init__(self, n):
+             self.i = 0
+             self.n = n
+           def __iter__(self):
+             return self
+           def next(self):
+             if self.i >= self.n:
+               raise StopIteration
+             else:
+               self.i += 1
+               return math.log(self.i)
+
+    - .. class:: incremental
+       
+       It doesn't consume more memory for bigger ``n`` and computes values as
+       they needed, but it looks *ugly*.
+
+       .. container::
+
+        So they decided to make life easier and let ugly iterators look like
+        cute functions::
+
+         def logs(n):
+           for i in range(1,n+1):
+             yield math.log(i)
+
+        It almost equivalent to previous class, but uses 3 lines.
+
+       .. container::
+
+        Since such logic is very popular, there is even shorter option::
+        
+         (math.log(i) for i in range(1,n+1))
+
+       Or if you want a list, just use ``[]`` instead of ``()``.
+
+       .. container::
+
+        Generator expressions support filtering too::
+
+         (math.log(i) for i in range(1,n+1) if i%2==1)
+
+       .. container::
+
+        This ``for``\-``if``\s can even be nested (just like usual ``for``\s
+        and ``if``\s::
+         
+         (a+b for a in range(5) if a%2==0 \
+              for b in range(2*a) if b%4==1)
+
+Generator functions
+===================
+
+.. class:: tiny
+
+ .. list-table::
+  :class: borderless
+
+  * - .. class:: incremental
+
+       .. container::
+
+        Look at this generator function::
+
+         def gen(param):
+           startup()
+           yield start_value
+           while main_loop():
+             do_logic()
+             yield intermediate
+             if do_more_logic():
+               yield something_other
+
+       .. container::
+
+        It looks very much like coroutine, so after a lot of efforts they made
+        coroutines almost clear in Python::
+
+         def player(game):
+           collect_chips()
+           yield READY
+           while True:
+             try:
+               compute_bet()
+               their_bets = (yield our_bet)
+             except TableFolded:
+               gather_chips()
+               move_to_next_table()
+             except GeneratorExit:
+               exchange_chips()
+               break
+
+    - .. class:: incremental
+
+       .. container::
+
+        Note that ``yield``\s now can expect some return values, and even can
+        be source of exceptions. This is achieved through this methods of
+        generators produced by this functions:
+
+        .. list-table::
+
+         * - ``next()``
+           - old one, does nothing special
+         * - ``send(value)``
+           - injects ``value`` as result of ``yield``
+         * - ``throw(t[,v[,tb]])``
+           - raises exception at the point of ``yield``
+         * - ``close()``
+           - raises ``GeneratorExit``
+
+       Every call resumes generator at the point it was paused and returns
+       value gathered by next ``yield`` or propagates any unhandled exception
+       occured inside generator. ``close`` is special since it silently eats
+       ``StopIteration`` and ``GeneratorExit`` exceptions and raises
+       ``RuntimeError`` if generator tries to return something more to caller.
+
+Context managers
+================
+
+.. class:: tiny
+
+ .. list-table::
+  :class: borderless
+
+  * - .. class:: incremental
+
+       .. container::
+
+        You might remember that parrern that appeared around file handling
+        (archives in our case)::
+
+         fil = open('thefile', 'w')
+         fil.write(smth)
+         process(fil)
+         fil.close()
+
+       .. container::
+
+        But what will happen if we get come error e.g. in ``process()``?
+        ``fil`` will remain open with proper consequences. So we should use
+        ``finally``::
+
+         fil = open('thefile', 'w')
+         try:
+           fil.write(smth)
+           process(fil)
+         finally:
+           fil.close()
+
+       .. container::
+
+        Here is inconsistence: we have to remember what cleanup operations
+        should be done after the work with object is done. Here come context
+        managers::
+
+         with open('thefile', 'w') as fil:
+           fil.write(smth)
+           process(fil)
+
+    - .. class:: incremental
+
+       .. container::
+          
+        Context manager protocol consists of two methods:
+
+        ============= =========================================================
+        ``__enter__`` called at ``with``, returned value goes to variable after
+                      ``as``
+        ``__exit__``  called when block ends with exception's triplet (or
+                      ``None``\s)
+        ============= =========================================================
+
+       Note that variable after ``as`` gets not context manager itself, but
+       some other value returned by ``__enter__`` (well, in case of ``file``,
+       it is ``self``).
+
+       There is couple of handy methods in ``contextlib`` (in number of 2):
+       
+       * ``closing`` closes everything that can be closed::
+
+          with closing(socket()) as sock:
+            sock.connect(....)
+            ....
+
+       * ``contextmanager`` decorator allows you to create a context manager
+         without all that ``__`` burden::
+
+          @contextlib.contextmanager
+          def closing(obj):
+            try:
+              yield obj
+            finally:
+              obj.close()
+
 Slots
 =====
 
@@ -1148,3 +1374,57 @@ Slots
   You may have noted that every object requires a dictionary instance for its
   ``__dict__``, which doesn't looks good for classes that contains one or two
   fields.
+
+ .. container::
+
+  For such types you can list all possible attributes in ``__slots__`` and then
+  no dict will be created::
+
+   class Slots(object):
+     __slots__ = ('a', 'b', 'c')
+     def __init__(self):
+       self.a = 1
+       self.b = 2
+       self.cc = 3  # AttributeError!
+
+ Couple of facts:
+
+ * if you need to add not listed attribute, add ``__dict__`` to ``__slots__``
+   list;
+ * if one of base classes already have ``__dict__``, slots definition is
+   meaningless;
+ * derived classes will have ``__dict__`` by default;
+ * you can not set default values for slots in class level, it'll overwrite
+   slot's meaning.
+
+Metaclasses
+===========
+
+.. class:: small incremental
+
+ .. container::
+
+  Remember class creation process? You can tweak even this part! ::
+
+   bases = (object,)
+   body = "cls_var=123\ndef __init__(self, param):......"
+   _attrs = {}
+   eval(compile(body,__name__,'exec'),globals(),_attrs)
+   C = type("C", bases, _attrs)
+
+ .. container::
+
+  After this code, ``C`` becomes an object of class ``type``. And you can
+  inherit from class ``type`` just like from any other class.
+
+ .. container::
+
+  ::
+
+   class my_type(type):
+     def __new__(mcs, name, bases, attrs):
+       # do anything you want with attrs, for example
+       return super(my_type,mcs).__new__(mcs, name, bases, attrs)
+
+ Frameworks use this to add custom getters/setters to this class or some
+ classes connected to it, you can replace or tweak any method of new class.
